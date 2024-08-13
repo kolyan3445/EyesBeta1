@@ -19,7 +19,8 @@ namespace EyesBeta1
             A,
             B,
             C,
-            D
+            D,
+            T
         }
         
         private readonly Dictionary<string, EyeTypes> EyePool = new Dictionary<string, EyeTypes>()
@@ -35,13 +36,41 @@ namespace EyesBeta1
                 { "Животные", EyeTypes.C },
                 { "Зеркала", EyeTypes.C },
                 { "Зелья", EyeTypes.C },
+                { "Иллюзии2", EyeTypes.T },
+                { "Животные2", EyeTypes.T },
+                { "Зеркала2", EyeTypes.T },
+                { "Зелья2", EyeTypes.T },
                 { "Тени", EyeTypes.B },
                 { "Яд", EyeTypes.B },
                 { "Телепорт", EyeTypes.B },
                 { "Сны", EyeTypes.B },
+                { "Иллюзии1", EyeTypes.T },
+                { "Животные1", EyeTypes.T },
+                { "Зеркала1", EyeTypes.T },
+                { "Зелья1", EyeTypes.T },
+                { "Иллюзии13", EyeTypes.T },
+                { "Животные13", EyeTypes.T },
+                { "Зеркала13", EyeTypes.T },
+                { "Зелья13", EyeTypes.T },
                 { "Телепатия", EyeTypes.A },
                 { "Гипноз", EyeTypes.A },
                 { "Разум", EyeTypes.A },
+                { "Телепатия123", EyeTypes.T },
+                { "Гипноз123", EyeTypes.T },
+                { "Разум123", EyeTypes.T },
+                { "Телепатия1234", EyeTypes.T },
+                { "Гипноз1234", EyeTypes.T },
+                { "Разум1234", EyeTypes.T },
+                { "Телепатия12345", EyeTypes.T },
+                { "Гипноз12345", EyeTypes.T },
+                { "Разум12345", EyeTypes.T },
+                { "Телепатия123456", EyeTypes.T },
+                { "Гипноз123456", EyeTypes.T },
+                { "Разум123456", EyeTypes.T },
+                { "Разум12764", EyeTypes.T },
+                { "Телепатия129", EyeTypes.T },
+                { "Гипноз129", EyeTypes.T },
+                { "Разум129", EyeTypes.T },
             };
 
         private string RandomEye(Random random)
@@ -53,17 +82,17 @@ namespace EyesBeta1
             switch (currEye.Item2)
             {
                 case EyeTypes.A:
-                    if (ValidateEye(random, 8))
-                        return currEye.Item1;
-                    break;
+                    return currEye.Item1;
+                    //break;
+
                 case EyeTypes.B:
-                    if (ValidateEye(random, 4))
-                        return currEye.Item1;
-                    break;
+                    return currEye.Item1;
+                    //break;
+
                 case EyeTypes.C:
-                    if (ValidateEye(random, 2))
-                        return currEye.Item1;
-                    break;
+                    return currEye.Item1;
+                    //break;
+
                 case EyeTypes.D:
                     Console.WriteLine(currEye.Item1);
                     return currEye.Item1;
@@ -107,14 +136,14 @@ namespace EyesBeta1
 
         private void EyeCountSelectCheckBox_CheckStateChanged(object sender, EventArgs e)
         {
-            /*if (EyeCountSelectCheckBox.Checked)
+            if (EyeCountSelectCheckBox.Checked)
             {
                 DoubleEyeSelected = true;
             }
             else
             {
                 DoubleEyeSelected = false;
-            }*/
+            }
 
         }
     }

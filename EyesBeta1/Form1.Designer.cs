@@ -82,7 +82,6 @@
             this.EyeCountSelectCheckBox.TabIndex = 5;
             this.EyeCountSelectCheckBox.Text = "Выбрать сразу два глаза";
             this.EyeCountSelectCheckBox.UseVisualStyleBackColor = true;
-            this.EyeCountSelectCheckBox.Visible = false;
             this.EyeCountSelectCheckBox.CheckStateChanged += new System.EventHandler(this.EyeCountSelectCheckBox_CheckStateChanged);
             // 
             // EyeSelector
