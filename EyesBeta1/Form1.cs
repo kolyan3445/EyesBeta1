@@ -24,37 +24,39 @@ namespace EyesBeta1
         
         private readonly Dictionary<string, EyeTypes> EyePool = new Dictionary<string, EyeTypes>()
             {
-                { "Огонь", EyeTypes.D },
-                { "Вода", EyeTypes.D },
-                { "Воздух", EyeTypes.D },
-                { "Земля", EyeTypes.D },
-                { "Электро", EyeTypes.D },
-                { "Растения", EyeTypes.D },
-                { "Лёд", EyeTypes.D },
-                { "Иллюзии", EyeTypes.C },
-                { "Животные", EyeTypes.C },
-                { "Зеркала", EyeTypes.C },
-                { "Зелья", EyeTypes.C },
-                { "Тени", EyeTypes.B },
-                { "Яд", EyeTypes.B },
-                { "Телепорт", EyeTypes.B },
-                { "Сны", EyeTypes.B },
-                { "Телепатия", EyeTypes.A },
-                { "Гипноз", EyeTypes.A },
-                { "Разум", EyeTypes.A },
+                { "Огонь", EyeTypes.D },    //0
+                { "Вода", EyeTypes.D },     //1
+                { "Воздух", EyeTypes.D },   //2
+                { "Земля", EyeTypes.D },    //3
+                { "Электро", EyeTypes.D },  //4 
+                { "Растения", EyeTypes.D }, //5
+                { "Лёд", EyeTypes.D },      //6
+                { "Иллюзии", EyeTypes.C },  //7
+                { "Животные", EyeTypes.C }, //8
+                { "Зеркала", EyeTypes.C },  //9
+                { "Зелья", EyeTypes.C },    //10
+                { "Тени", EyeTypes.B },     //11
+                { "Яд", EyeTypes.B },       //12
+                { "Телепорт", EyeTypes.B }, //13
+                { "Сны", EyeTypes.B },      //14
+                { "Телепатия", EyeTypes.A },//15
+                { "Гипноз", EyeTypes.A },   //16
+                { "Разум", EyeTypes.A },    //17
             };
 
+        //Выбор рандомного глаза
         private string RandomEye(Random random)
         {
-            int buffer = random.Next(0, EyePool.Count);
-            
+            //Получение рандомного глаза из словаря (dictionary) выше - EyePool.
+            int buffer = random.Next(0, EyePool.Count - 1);
             (string, EyeTypes) currEye = (EyePool.ElementAt(buffer).Key, EyePool.ElementAt(buffer).Value);
 
+            //Запихиваем тип глаза в switch
             switch (currEye.Item2)
             {
                 case EyeTypes.A:
-                    if (ValidateEye(random, 8))
-                        return currEye.Item1;
+                    if (ValidateEye(random, 8)) //К8 (или че это бля я хуй знает если честно)
+                        return currEye.Item1; //Возвращаем полученный глаз, если выпала нужная циферка
                     break;
                 case EyeTypes.B:
                     if (ValidateEye(random, 4))
@@ -72,10 +74,13 @@ namespace EyesBeta1
             return RandomEye(random);
         }
 
-        private bool ValidateEye(Random random, int maxValue)
+        //Валидация/К8 глаза.
+        //Должны получить число, переданное в метод, через рандом. Только в этом случае у нас true. Иначе - false.
+        private bool ValidateEye(Random random, int value)
         {
+            var maxValue = value + 1;
             int dice = random.Next(1, maxValue);
-            return dice == maxValue;
+            return dice == value;
         }
         
         private void EyeSelectorButton_Click(object sender, EventArgs e)
