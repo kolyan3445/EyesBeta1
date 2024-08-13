@@ -19,7 +19,8 @@ namespace EyesBeta1
             A,
             B,
             C,
-            D
+            D,
+            T
         }
         
         private readonly Dictionary<string, EyeTypes> EyePool = new Dictionary<string, EyeTypes>()
@@ -58,14 +59,17 @@ namespace EyesBeta1
                     if (ValidateEye(random, 8)) //К8 (или че это бля я хуй знает если честно)
                         return currEye.Item1; //Возвращаем полученный глаз, если выпала нужная циферка
                     break;
+                
                 case EyeTypes.B:
                     if (ValidateEye(random, 4))
                         return currEye.Item1;
                     break;
+
                 case EyeTypes.C:
                     if (ValidateEye(random, 2))
                         return currEye.Item1;
                     break;
+
                 case EyeTypes.D:
                     Console.WriteLine(currEye.Item1);
                     return currEye.Item1;
@@ -112,14 +116,14 @@ namespace EyesBeta1
 
         private void EyeCountSelectCheckBox_CheckStateChanged(object sender, EventArgs e)
         {
-            /*if (EyeCountSelectCheckBox.Checked)
+            if (EyeCountSelectCheckBox.Checked)
             {
                 DoubleEyeSelected = true;
             }
             else
             {
                 DoubleEyeSelected = false;
-            }*/
+            }
 
         }
     }
