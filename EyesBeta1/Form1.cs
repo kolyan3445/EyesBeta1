@@ -49,7 +49,7 @@ namespace EyesBeta1
         private string RandomEye(Random random)
         {
             //Получение рандомного глаза из словаря (dictionary) выше - EyePool.
-            int buffer = random.Next(0, EyePool.Count - 1);
+            int buffer = random.Next(0, EyePool.Count);
             (string, EyeTypes) currEye = (EyePool.ElementAt(buffer).Key, EyePool.ElementAt(buffer).Value);
 
             //Запихиваем тип глаза в switch
