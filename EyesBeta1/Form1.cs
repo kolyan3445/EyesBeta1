@@ -25,73 +25,50 @@ namespace EyesBeta1
         
         private readonly Dictionary<string, EyeTypes> EyePool = new Dictionary<string, EyeTypes>()
             {
-                { "Огонь", EyeTypes.D },
-                { "Вода", EyeTypes.D },
-                { "Воздух", EyeTypes.D },
-                { "Земля", EyeTypes.D },
-                { "Электро", EyeTypes.D },
-                { "Растения", EyeTypes.D },
-                { "Лёд", EyeTypes.D },
-                { "Иллюзии", EyeTypes.C },
-                { "Животные", EyeTypes.C },
-                { "Зеркала", EyeTypes.C },
-                { "Зелья", EyeTypes.C },
-                { "Иллюзии2", EyeTypes.T },
-                { "Животные2", EyeTypes.T },
-                { "Зеркала2", EyeTypes.T },
-                { "Зелья2", EyeTypes.T },
-                { "Тени", EyeTypes.B },
-                { "Яд", EyeTypes.B },
-                { "Телепорт", EyeTypes.B },
-                { "Сны", EyeTypes.B },
-                { "Иллюзии1", EyeTypes.T },
-                { "Животные1", EyeTypes.T },
-                { "Зеркала1", EyeTypes.T },
-                { "Зелья1", EyeTypes.T },
-                { "Иллюзии13", EyeTypes.T },
-                { "Животные13", EyeTypes.T },
-                { "Зеркала13", EyeTypes.T },
-                { "Зелья13", EyeTypes.T },
-                { "Телепатия", EyeTypes.A },
-                { "Гипноз", EyeTypes.A },
-                { "Разум", EyeTypes.A },
-                { "Телепатия123", EyeTypes.T },
-                { "Гипноз123", EyeTypes.T },
-                { "Разум123", EyeTypes.T },
-                { "Телепатия1234", EyeTypes.T },
-                { "Гипноз1234", EyeTypes.T },
-                { "Разум1234", EyeTypes.T },
-                { "Телепатия12345", EyeTypes.T },
-                { "Гипноз12345", EyeTypes.T },
-                { "Разум12345", EyeTypes.T },
-                { "Телепатия123456", EyeTypes.T },
-                { "Гипноз123456", EyeTypes.T },
-                { "Разум123456", EyeTypes.T },
-                { "Разум12764", EyeTypes.T },
-                { "Телепатия129", EyeTypes.T },
-                { "Гипноз129", EyeTypes.T },
-                { "Разум129", EyeTypes.T },
+                { "Огонь", EyeTypes.D },    //0
+                { "Вода", EyeTypes.D },     //1
+                { "Воздух", EyeTypes.D },   //2
+                { "Земля", EyeTypes.D },    //3
+                { "Электро", EyeTypes.D },  //4 
+                { "Растения", EyeTypes.D }, //5
+                { "Лёд", EyeTypes.D },      //6
+                { "Иллюзии", EyeTypes.C },  //7
+                { "Животные", EyeTypes.C }, //8
+                { "Зеркала", EyeTypes.C },  //9
+                { "Зелья", EyeTypes.C },    //10
+                { "Тени", EyeTypes.B },     //11
+                { "Яд", EyeTypes.B },       //12
+                { "Телепорт", EyeTypes.B }, //13
+                { "Сны", EyeTypes.B },      //14
+                { "Телепатия", EyeTypes.A },//15
+                { "Гипноз", EyeTypes.A },   //16
+                { "Разум", EyeTypes.A },    //17
             };
 
+        //Выбор рандомного глаза
         private string RandomEye(Random random)
         {
-            int buffer = random.Next(0, EyePool.Count);
-            
+            //Получение рандомного глаза из словаря (dictionary) выше - EyePool.
+            int buffer = random.Next(0, EyePool.Count - 1);
             (string, EyeTypes) currEye = (EyePool.ElementAt(buffer).Key, EyePool.ElementAt(buffer).Value);
 
+            //Запихиваем тип глаза в switch
             switch (currEye.Item2)
             {
                 case EyeTypes.A:
-                    return currEye.Item1;
-                    //break;
-
+                    if (ValidateEye(random, 8)) //К8 (или че это бля я хуй знает если честно)
+                        return currEye.Item1; //Возвращаем полученный глаз, если выпала нужная циферка
+                    break;
+                
                 case EyeTypes.B:
-                    return currEye.Item1;
-                    //break;
+                    if (ValidateEye(random, 4))
+                        return currEye.Item1;
+                    break;
 
                 case EyeTypes.C:
-                    return currEye.Item1;
-                    //break;
+                    if (ValidateEye(random, 2))
+                        return currEye.Item1;
+                    break;
 
                 case EyeTypes.D:
                     Console.WriteLine(currEye.Item1);
@@ -101,10 +78,13 @@ namespace EyesBeta1
             return RandomEye(random);
         }
 
-        private bool ValidateEye(Random random, int maxValue)
+        //Валидация/К8 глаза.
+        //Должны получить число, переданное в метод, через рандом. Только в этом случае у нас true. Иначе - false.
+        private bool ValidateEye(Random random, int value)
         {
+            var maxValue = value + 1;
             int dice = random.Next(1, maxValue);
-            return dice == maxValue;
+            return dice == value;
         }
         
         private void EyeSelectorButton_Click(object sender, EventArgs e)
