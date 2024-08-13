@@ -40,33 +40,79 @@ namespace EyesBeta1
                 { "Разум", "А" },
             };
 
-        private string[] RandomEye()
+        private string RandomEye()
         {
             Random random = new Random();
             int buffer = random.Next(0, EyePool.Count);
             string[] CurrEye = { EyePool.ElementAt(buffer).Key, EyePool.ElementAt(buffer).Value };
-            
-            int d2 = random.Next(0, 1);
+            string FinalEye = "";
 
-            while (d2 > 0)
+            while (CurrEye[1] != "D")
             {
+                int d2 = random.Next(0, 1);
+                int d4 = random.Next(0, 3);
+                int d8 = random.Next(0, 7);
+                if (CurrEye[1] == "C" && d2 == 1)
+                {
+                    Console.WriteLine(CurrEye);
+                    FinalEye = CurrEye[0];
+                }
+                else
+                {
+                    Console.WriteLine(CurrEye);
+                    buffer = random.Next(0, EyePool.Count);
+                    CurrEye[0] = EyePool.ElementAt(buffer).Key;
+                    CurrEye[1] = EyePool.ElementAt(buffer).Value;
+                    d2 = random.Next(0, 1);
+                }
+                if (CurrEye[1] == "B" && d4 == 3)
+                {
+                    Console.WriteLine(CurrEye);
+                    FinalEye = CurrEye[0];
+                }
+                else
+                {
+                    Console.WriteLine(CurrEye);
+                    buffer = random.Next(0, EyePool.Count);
+                    CurrEye[0] = EyePool.ElementAt(buffer).Key;
+                    CurrEye[1] = EyePool.ElementAt(buffer).Value;
+                    d4 = random.Next(0, 3);
+                }
+                if (CurrEye[1] == "A" && d8 == 7)
+                {
+                    FinalEye = CurrEye[0];
+                    Console.WriteLine(CurrEye);
+                }
+                else
+                {
+                    Console.WriteLine(CurrEye);
+                    buffer = random.Next(0, EyePool.Count);
+                    CurrEye[0] = EyePool.ElementAt(buffer).Key;
+                    CurrEye[1] = EyePool.ElementAt(buffer).Value;
+                    d8 = random.Next(0, 7);
+                }
+
 
             }
-
-            return CurrEye;
+            if (CurrEye[1] == "D") 
+            {
+                Console.WriteLine(CurrEye);
+                FinalEye = CurrEye[0]; 
+            }
+            return FinalEye;
         }
 
         private void EyeSelectorButton_Click(object sender, EventArgs e)
         {
-            string[] Eye = RandomEye();
+            string Eye = RandomEye();
 
             if (DoubleEyeSelected)
             {
-                EyeSelectResultLabel.Text = Eye[0] + " " + RandomEye()[0];
+                EyeSelectResultLabel.Text = Eye + " " + RandomEye();
             }
             else
             {
-                EyeSelectResultLabel.Text = Eye[0]; 
+                EyeSelectResultLabel.Text = Eye; 
             }
         }
 
