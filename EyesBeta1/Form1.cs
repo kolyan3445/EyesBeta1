@@ -1,118 +1,94 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace EyesBeta1
 {
     public partial class EyeSelector : Form
     {
+        private Random _random = new Random();
+        
         public EyeSelector()
         {
             InitializeComponent();
         }
 
-        private Dictionary<string, string> EyePool = new Dictionary<string, string>()
+        private enum EyeTypes
+        {
+            A,
+            B,
+            C,
+            D
+        }
+        
+        private readonly Dictionary<string, EyeTypes> EyePool = new Dictionary<string, EyeTypes>()
             {
-                { "Огонь", "D" },
-                { "Вода", "D" },
-                { "Воздух", "D" },
-                { "Земля", "D" },
-                { "Электро", "D" },
-                { "Растения", "D" },
-                { "Лёд", "D" },
-                { "Иллюзии", "C" },
-                { "Животные", "C" },
-                { "Зеркала", "C" },
-                { "Зелья", "C" },
-                { "Тени", "B" },
-                { "Яд", "B" },
-                { "Телепорт", "B" },
-                { "Сны", "B" },
-                { "Телепатия", "A" },
-                { "Гипноз", "А" },
-                { "Разум", "А" },
+                { "Огонь", EyeTypes.D },
+                { "Вода", EyeTypes.D },
+                { "Воздух", EyeTypes.D },
+                { "Земля", EyeTypes.D },
+                { "Электро", EyeTypes.D },
+                { "Растения", EyeTypes.D },
+                { "Лёд", EyeTypes.D },
+                { "Иллюзии", EyeTypes.C },
+                { "Животные", EyeTypes.C },
+                { "Зеркала", EyeTypes.C },
+                { "Зелья", EyeTypes.C },
+                { "Тени", EyeTypes.B },
+                { "Яд", EyeTypes.B },
+                { "Телепорт", EyeTypes.B },
+                { "Сны", EyeTypes.B },
+                { "Телепатия", EyeTypes.A },
+                { "Гипноз", EyeTypes.A },
+                { "Разум", EyeTypes.A },
             };
 
-        private string RandomEye()
+        private string RandomEye(Random random)
         {
-            Random random = new Random();
             int buffer = random.Next(0, EyePool.Count);
-            string[] CurrEye = { EyePool.ElementAt(buffer).Key, EyePool.ElementAt(buffer).Value };
-            string FinalEye = "";
+            
+            (string, EyeTypes) currEye = (EyePool.ElementAt(buffer).Key, EyePool.ElementAt(buffer).Value);
 
-            while (CurrEye[1] != "D")
+            switch (currEye.Item2)
             {
-                int d2 = random.Next(0, 1);
-                int d4 = random.Next(0, 3);
-                int d8 = random.Next(0, 7);
-                if (CurrEye[1] == "C" && d2 == 1)
-                {
-                    Console.WriteLine(CurrEye);
-                    FinalEye = CurrEye[0];
-                }
-                else
-                {
-                    Console.WriteLine(CurrEye);
-                    buffer = random.Next(0, EyePool.Count);
-                    CurrEye[0] = EyePool.ElementAt(buffer).Key;
-                    CurrEye[1] = EyePool.ElementAt(buffer).Value;
-                    d2 = random.Next(0, 1);
-                }
-                if (CurrEye[1] == "B" && d4 == 3)
-                {
-                    Console.WriteLine(CurrEye);
-                    FinalEye = CurrEye[0];
-                }
-                else
-                {
-                    Console.WriteLine(CurrEye);
-                    buffer = random.Next(0, EyePool.Count);
-                    CurrEye[0] = EyePool.ElementAt(buffer).Key;
-                    CurrEye[1] = EyePool.ElementAt(buffer).Value;
-                    d4 = random.Next(0, 3);
-                }
-                if (CurrEye[1] == "A" && d8 == 7)
-                {
-                    FinalEye = CurrEye[0];
-                    Console.WriteLine(CurrEye);
-                }
-                else
-                {
-                    Console.WriteLine(CurrEye);
-                    buffer = random.Next(0, EyePool.Count);
-                    CurrEye[0] = EyePool.ElementAt(buffer).Key;
-                    CurrEye[1] = EyePool.ElementAt(buffer).Value;
-                    d8 = random.Next(0, 7);
-                }
-
-
+                case EyeTypes.A:
+                    if (ValidateEye(random, 8))
+                        return currEye.Item1;
+                    break;
+                case EyeTypes.B:
+                    if (ValidateEye(random, 4))
+                        return currEye.Item1;
+                    break;
+                case EyeTypes.C:
+                    if (ValidateEye(random, 2))
+                        return currEye.Item1;
+                    break;
+                case EyeTypes.D:
+                    Console.WriteLine(currEye.Item1);
+                    return currEye.Item1;
             }
-            if (CurrEye[1] == "D") 
-            {
-                Console.WriteLine(CurrEye);
-                FinalEye = CurrEye[0]; 
-            }
-            return FinalEye;
+
+            return RandomEye(random);
         }
 
+        private bool ValidateEye(Random random, int maxValue)
+        {
+            int dice = random.Next(1, maxValue);
+            return dice == maxValue;
+        }
+        
         private void EyeSelectorButton_Click(object sender, EventArgs e)
         {
-            string Eye = RandomEye();
+            string eye = RandomEye(_random);
 
             if (DoubleEyeSelected)
             {
-                EyeSelectResultLabel.Text = Eye + " " + RandomEye();
+                EyeSelectResultLabel.Text = eye + " " + RandomEye(_random);
             }
             else
             {
-                EyeSelectResultLabel.Text = Eye; 
+                EyeSelectResultLabel.Text = eye; 
             }
         }
 
